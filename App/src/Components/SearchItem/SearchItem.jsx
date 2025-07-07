@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom"
 import "./searchItem.css"
 
-function SearchItem(props) {
-   const {item} = props  
+function SearchItem({item}) {
+  //  const {item} = props  
+  //  console.log("item" ,item);
+   
   return (
     <div className="searchItem">
       <img src={item.photos[0]} alt="" className="siImg" />

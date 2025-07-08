@@ -6,10 +6,12 @@ import { faCircleArrowLeft, faCircleArrowRight, faCircleXmark, faLocationDot } f
 
 import MailList from "../../Components/mailList/MailList"
 import Footer from "../../Components/Footer/Footer"
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { tr } from "date-fns/locale"
 import useFetch  from "../../Hooks/useFetch"
 import { useLocation } from "react-router-dom"
+import { SearchContext } from "../../Context/SearchContext"
+// import { SearchContext } from "../../Context/SearchContext"
 
 function Hotel() {
   const location = useLocation()
@@ -20,31 +22,29 @@ function Hotel() {
   const [slideNumber , setSlideNumber] =useState(0)
   const [open , setOpen] = useState(false)
 
+  const {dates , options} = useContext(SearchContext)
+ 
+  
+
+  const MILLISECONDS_PER_DAY =1000 * 60 * 60 *24;
+  function dayDifference(date1 , date2){
+    const timeDiff =Math.abs(date2.getTime() - date1.getTime());
+    const diffDays =Math.ceil(timeDiff / MILLISECONDS_PER_DAY);
+    return diffDays
+  }
+
+  const days =dayDifference(dates[0].endDate , dates[0].startDate);
+  
+// console.log(dates[0].endDate , dates[0].startDate);
+
+  
+
   const handleOpen = (i) => {
     setSlideNumber(i)
     setOpen(true)
   }
 
-  // const photos = [
-  //   {
-  //     src : "https://cf.bstatic.com/xdata/images/hotel/270x200/560861636.jpg?k=2565383c10d3b96ec4de403c2bfccef55bc4be2ce4c39fe6c6f83b236a70ce01&o="
-  //   },
-  //   {
-  //     src : "https://cf.bstatic.com/xdata/images/hotel/270x200/634251734.jpg?k=a03d8982c9f7ee4a486eca439fb674d3ca68d0ea3866c561927fd3de1cc78c78&o="
-  //   },
-  //   {
-  //     src : "https://cf.bstatic.com/xdata/images/hotel/max1024x768/474866206.webp?k=d62afc97fdb7fea1e57fefa9e085138f5d3915e17da299ee24a905b916d61bd2&o="
-  //   },
-  //   {
-  //     src : "https://cf.bstatic.com/xdata/images/hotel/270x200/541649573.jpg?k=9d74b240f39d1e4eb0da46a3130ad251101fe852202e2aeadb4de85cdaedc16a&o="
-  //   },
-  //   {
-  //     src : "https://cf.bstatic.com/xdata/images/hotel/270x200/541649573.jpg?k=9d74b240f39d1e4eb0da46a3130ad251101fe852202e2aeadb4de85cdaedc16a&o="
-  //   }  ,
-  //   {
-  //     src : "https://cf.bstatic.com/xdata/images/hotel/270x200/541649573.jpg?k=9d74b240f39d1e4eb0da46a3130ad251101fe852202e2aeadb4de85cdaedc16a&o="
-  //   }    
-  // ]
+
 
   const handleMove = (direction) => {
      let newSlideNumber;
@@ -57,6 +57,8 @@ function Hotel() {
 
      setSlideNumber(newSlideNumber)
   }
+
+
 
   return (
     <div>
@@ -107,11 +109,11 @@ function Hotel() {
                 </p>
               </div>
               <div className="hotelDetailsPrice">
-                <h1>perfect for 9 days stay</h1>
+                <h1>perfect for {days} days stay</h1>
                 <span>
                   Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam tenetur unde, mollitia eaque itaque hic?
                 </span>
-                <h2><b>$945</b> (9 nights)</h2>
+                <h2><b>${days * data.cheepestPrice * options.room}</b> ({days} nights)</h2>
                 <button>Reserve or Book now</button>
               </div>
             </div>

@@ -8,6 +8,7 @@ import 'react-date-range/dist/theme/default.css';
 import {format} from "date-fns"
 import { useNavigate } from "react-router-dom";
 import { SearchContext } from "../../Context/SearchContext";
+import { AuthContext } from "../../Context/AuthContex";
 // import { SearchContext } from "../../Context/SearchContext";
 
 
@@ -50,7 +51,7 @@ function Header(props) {
        navigate("/hotels" ,  {state:{destination , dates , options}})
     }
  
-
+    const {user} = useContext(AuthContext)
   return (
     <div className="header">
         <div className={type ==="list" ? "headerContainer listmMode" : "headerContainer"}>
@@ -80,7 +81,7 @@ function Header(props) {
             <>
            <h1 className="headerTitle">A lifetime of discounts ? it's Genius</h1>
            <p className="headerDesc">Get rewarded for your travels unlock instant saving of 10% or more with a hotelbooking account</p>
-           <button className="headerBtn">Sign In / Register</button>
+          {!user && <button className="headerBtn">Sign In / Register</button>}
 
            <div className="headerSearch">
 

@@ -3,7 +3,7 @@ import "./searchItem.css"
 
 function SearchItem({item}) {
   //  const {item} = props  
-   console.log("item" ,item);
+  //  console.log("item" ,item);
    
   return (
     <div className="searchItem">
